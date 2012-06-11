@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,14 +74,14 @@ public class AndroThriftChatActivity extends Activity {
 				protocol = new TJSONProtocol(transport);
 				client = new ChatRoomService.Client(protocol);
 				client.enregistrerUtilisateur(user);
-				
+				Log.d("User signing-in", "Done");
 				
 			} catch (TTransportException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e("User signing-in", "Thrift exception", e);
 			} catch (TException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e("User signing-in", "Thrift exception", e);
+			} catch (Exception e) {
+				Log.e("User signing-in", "Thrift exception", e);
 			}
 	    	finally {
 	    		return null;

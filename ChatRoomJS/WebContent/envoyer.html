@@ -9,9 +9,39 @@
 <script src="./js/message_types.js" type="text/javascript"></script>
 <script src="./js/ChatRoomService.js" type="text/javascript"></script>
 <script src="./js/chatRoomService_types.js" type="text/javascript"></script>
+<script src="./js/exception_types.js" type="text/javascript"></script>
+<script type="text/javascript">
+function envoyer() {
+
+  var transport = new Thrift.Transport(
+                    "http://localhost:8080/ChatRoomServeur/chatroom/");
+  var protocol = new Thrift.Protocol(transport);
+  var client = new ChatRoomServiceClient(protocol);
+
+  var message = new Message();
+  var utilisateur = new Utilisateur();
+
+  utilisateur.pseudo = $("#pseudo").val();
+  utilisateur.motdepasse = $("#motdepasse").val();
+  message.utilisateur = utilisateur;
+  message.contenu = $("#message").val();
+
+  try {
+    client.envoyerMessage(message);
+  } catch(e){
+    alert(e);
+  }
+}
+</script>
 </HEAD>
 <BODY>
-	<div></div>
+	<div>
+	Pseudo : <input id="pseudo" type="text"/><br>
+	Mot de passe : <input id="motdepasse" type="text"/><br>
+	Message : <input id="message" type="text" size="100"/><br>
+	<input type="button" value="Envoyer"
+                onclick="javascript:envoyer()" />
+	</div>
 	<br>
 	<a href="chatroom.html">retour</a>
 </BODY>

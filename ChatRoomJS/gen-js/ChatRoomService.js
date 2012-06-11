@@ -37,9 +37,13 @@ ChatRoomService_getListeMessage_args.prototype.write = function(output) {
 
 ChatRoomService_getListeMessage_result = function(args) {
   this.success = null;
+  this.se = null;
   if (args) {
     if (args.success !== undefined) {
       this.success = args.success;
+    }
+    if (args.se !== undefined) {
+      this.se = args.se;
     }
   }
 };
@@ -78,9 +82,14 @@ ChatRoomService_getListeMessage_result.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.se = new ServiceException();
+        this.se.read(input);
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -104,6 +113,11 @@ ChatRoomService_getListeMessage_result.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.se) {
+    output.writeFieldBegin('se', Thrift.Type.STRUCT, 1);
+    this.se.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -166,6 +180,12 @@ ChatRoomService_envoyerMessage_args.prototype.write = function(output) {
 };
 
 ChatRoomService_envoyerMessage_result = function(args) {
+  this.se = null;
+  if (args) {
+    if (args.se !== undefined) {
+      this.se = args.se;
+    }
+  }
 };
 ChatRoomService_envoyerMessage_result.prototype = {};
 ChatRoomService_envoyerMessage_result.prototype.read = function(input) {
@@ -179,7 +199,22 @@ ChatRoomService_envoyerMessage_result.prototype.read = function(input) {
     if (ftype == Thrift.Type.STOP) {
       break;
     }
-    input.skip(ftype);
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.se = new ServiceException();
+        this.se.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
     input.readFieldEnd();
   }
   input.readStructEnd();
@@ -188,6 +223,11 @@ ChatRoomService_envoyerMessage_result.prototype.read = function(input) {
 
 ChatRoomService_envoyerMessage_result.prototype.write = function(output) {
   output.writeStructBegin('ChatRoomService_envoyerMessage_result');
+  if (this.se) {
+    output.writeFieldBegin('se', Thrift.Type.STRUCT, 1);
+    this.se.write(output);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -248,6 +288,12 @@ ChatRoomService_enregistrerUtilisateur_args.prototype.write = function(output) {
 };
 
 ChatRoomService_enregistrerUtilisateur_result = function(args) {
+  this.se = null;
+  if (args) {
+    if (args.se !== undefined) {
+      this.se = args.se;
+    }
+  }
 };
 ChatRoomService_enregistrerUtilisateur_result.prototype = {};
 ChatRoomService_enregistrerUtilisateur_result.prototype.read = function(input) {
@@ -261,7 +307,22 @@ ChatRoomService_enregistrerUtilisateur_result.prototype.read = function(input) {
     if (ftype == Thrift.Type.STOP) {
       break;
     }
-    input.skip(ftype);
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.se = new ServiceException();
+        this.se.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
     input.readFieldEnd();
   }
   input.readStructEnd();
@@ -270,6 +331,11 @@ ChatRoomService_enregistrerUtilisateur_result.prototype.read = function(input) {
 
 ChatRoomService_enregistrerUtilisateur_result.prototype.write = function(output) {
   output.writeStructBegin('ChatRoomService_enregistrerUtilisateur_result');
+  if (this.se) {
+    output.writeFieldBegin('se', Thrift.Type.STRUCT, 1);
+    this.se.write(output);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -315,6 +381,9 @@ ChatRoomServiceClient.prototype.recv_getListeMessage = function() {
   result.read(this.input);
   this.input.readMessageEnd();
 
+  if (null !== result.se) {
+    throw result.se;
+  }
   if (null !== result.success) {
     return result.success;
   }
@@ -355,6 +424,9 @@ ChatRoomServiceClient.prototype.recv_envoyerMessage = function() {
   result.read(this.input);
   this.input.readMessageEnd();
 
+  if (null !== result.se) {
+    throw result.se;
+  }
   return;
 };
 ChatRoomServiceClient.prototype.enregistrerUtilisateur = function(utilisateur, callback) {
@@ -392,5 +464,8 @@ ChatRoomServiceClient.prototype.recv_enregistrerUtilisateur = function() {
   result.read(this.input);
   this.input.readMessageEnd();
 
+  if (null !== result.se) {
+    throw result.se;
+  }
   return;
 };

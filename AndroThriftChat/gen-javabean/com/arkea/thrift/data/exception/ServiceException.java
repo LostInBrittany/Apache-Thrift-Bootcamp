@@ -4,7 +4,7 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-package com.arkea.thrift.data.message;
+package com.arkea.thrift.data.exception;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.thrift.scheme.IScheme;
@@ -29,34 +29,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Structure Message
+ * Exception pour le service ChatRoom
  * 
  */
-public class Message implements org.apache.thrift.TBase<Message, Message._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Message");
+public class ServiceException extends Exception implements org.apache.thrift.TBase<ServiceException, ServiceException._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("ServiceException");
 
-  private static final org.apache.thrift.protocol.TField CONTENU_FIELD_DESC = new org.apache.thrift.protocol.TField("contenu", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField UTILISATEUR_FIELD_DESC = new org.apache.thrift.protocol.TField("utilisateur", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField MESSAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("message", org.apache.thrift.protocol.TType.STRING, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new MessageStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new MessageTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new ServiceExceptionStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new ServiceExceptionTupleSchemeFactory());
   }
 
-  private String contenu; // required
-  private com.arkea.thrift.data.utilisateur.Utilisateur utilisateur; // required
+  private String id; // required
+  private String message; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     /**
-     * contenu Message
+     * identifiant erreur
      */
-    CONTENU((short)1, "contenu"),
+    ID((short)1, "id"),
     /**
-     * utilisateur ayant ecrit le Message
+     * message erreur
      */
-    UTILISATEUR((short)2, "utilisateur");
+    MESSAGE((short)2, "message");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -71,10 +71,10 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // CONTENU
-          return CONTENU;
-        case 2: // UTILISATEUR
-          return UTILISATEUR;
+        case 1: // ID
+          return ID;
+        case 2: // MESSAGE
+          return MESSAGE;
         default:
           return null;
       }
@@ -118,121 +118,121 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.CONTENU, new org.apache.thrift.meta_data.FieldMetaData("contenu", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.UTILISATEUR, new org.apache.thrift.meta_data.FieldMetaData("utilisateur", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, com.arkea.thrift.data.utilisateur.Utilisateur.class)));
+    tmpMap.put(_Fields.MESSAGE, new org.apache.thrift.meta_data.FieldMetaData("message", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Message.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ServiceException.class, metaDataMap);
   }
 
-  public Message() {
+  public ServiceException() {
   }
 
-  public Message(
-    String contenu,
-    com.arkea.thrift.data.utilisateur.Utilisateur utilisateur)
+  public ServiceException(
+    String id,
+    String message)
   {
     this();
-    this.contenu = contenu;
-    this.utilisateur = utilisateur;
+    this.id = id;
+    this.message = message;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public Message(Message other) {
-    if (other.isSetContenu()) {
-      this.contenu = other.contenu;
+  public ServiceException(ServiceException other) {
+    if (other.isSetId()) {
+      this.id = other.id;
     }
-    if (other.isSetUtilisateur()) {
-      this.utilisateur = new com.arkea.thrift.data.utilisateur.Utilisateur(other.utilisateur);
+    if (other.isSetMessage()) {
+      this.message = other.message;
     }
   }
 
-  public Message deepCopy() {
-    return new Message(this);
+  public ServiceException deepCopy() {
+    return new ServiceException(this);
   }
 
   @Override
   public void clear() {
-    this.contenu = null;
-    this.utilisateur = null;
+    this.id = null;
+    this.message = null;
   }
 
   /**
-   * contenu Message
+   * identifiant erreur
    */
-  public String getContenu() {
-    return this.contenu;
+  public String getId() {
+    return this.id;
   }
 
   /**
-   * contenu Message
+   * identifiant erreur
    */
-  public void setContenu(String contenu) {
-    this.contenu = contenu;
+  public void setId(String id) {
+    this.id = id;
   }
 
-  public void unsetContenu() {
-    this.contenu = null;
+  public void unsetId() {
+    this.id = null;
   }
 
-  /** Returns true if field contenu is set (has been assigned a value) and false otherwise */
-  public boolean isSetContenu() {
-    return this.contenu != null;
+  /** Returns true if field id is set (has been assigned a value) and false otherwise */
+  public boolean isSetId() {
+    return this.id != null;
   }
 
-  public void setContenuIsSet(boolean value) {
+  public void setIdIsSet(boolean value) {
     if (!value) {
-      this.contenu = null;
+      this.id = null;
     }
   }
 
   /**
-   * utilisateur ayant ecrit le Message
+   * message erreur
    */
-  public com.arkea.thrift.data.utilisateur.Utilisateur getUtilisateur() {
-    return this.utilisateur;
+  public String getMessage() {
+    return this.message;
   }
 
   /**
-   * utilisateur ayant ecrit le Message
+   * message erreur
    */
-  public void setUtilisateur(com.arkea.thrift.data.utilisateur.Utilisateur utilisateur) {
-    this.utilisateur = utilisateur;
+  public void setMessage(String message) {
+    this.message = message;
   }
 
-  public void unsetUtilisateur() {
-    this.utilisateur = null;
+  public void unsetMessage() {
+    this.message = null;
   }
 
-  /** Returns true if field utilisateur is set (has been assigned a value) and false otherwise */
-  public boolean isSetUtilisateur() {
-    return this.utilisateur != null;
+  /** Returns true if field message is set (has been assigned a value) and false otherwise */
+  public boolean isSetMessage() {
+    return this.message != null;
   }
 
-  public void setUtilisateurIsSet(boolean value) {
+  public void setMessageIsSet(boolean value) {
     if (!value) {
-      this.utilisateur = null;
+      this.message = null;
     }
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case CONTENU:
+    case ID:
       if (value == null) {
-        unsetContenu();
+        unsetId();
       } else {
-        setContenu((String)value);
+        setId((String)value);
       }
       break;
 
-    case UTILISATEUR:
+    case MESSAGE:
       if (value == null) {
-        unsetUtilisateur();
+        unsetMessage();
       } else {
-        setUtilisateur((com.arkea.thrift.data.utilisateur.Utilisateur)value);
+        setMessage((String)value);
       }
       break;
 
@@ -241,11 +241,11 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case CONTENU:
-      return getContenu();
+    case ID:
+      return getId();
 
-    case UTILISATEUR:
-      return getUtilisateur();
+    case MESSAGE:
+      return getMessage();
 
     }
     throw new IllegalStateException();
@@ -258,10 +258,10 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
     }
 
     switch (field) {
-    case CONTENU:
-      return isSetContenu();
-    case UTILISATEUR:
-      return isSetUtilisateur();
+    case ID:
+      return isSetId();
+    case MESSAGE:
+      return isSetMessage();
     }
     throw new IllegalStateException();
   }
@@ -270,30 +270,30 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof Message)
-      return this.equals((Message)that);
+    if (that instanceof ServiceException)
+      return this.equals((ServiceException)that);
     return false;
   }
 
-  public boolean equals(Message that) {
+  public boolean equals(ServiceException that) {
     if (that == null)
       return false;
 
-    boolean this_present_contenu = true && this.isSetContenu();
-    boolean that_present_contenu = true && that.isSetContenu();
-    if (this_present_contenu || that_present_contenu) {
-      if (!(this_present_contenu && that_present_contenu))
+    boolean this_present_id = true && this.isSetId();
+    boolean that_present_id = true && that.isSetId();
+    if (this_present_id || that_present_id) {
+      if (!(this_present_id && that_present_id))
         return false;
-      if (!this.contenu.equals(that.contenu))
+      if (!this.id.equals(that.id))
         return false;
     }
 
-    boolean this_present_utilisateur = true && this.isSetUtilisateur();
-    boolean that_present_utilisateur = true && that.isSetUtilisateur();
-    if (this_present_utilisateur || that_present_utilisateur) {
-      if (!(this_present_utilisateur && that_present_utilisateur))
+    boolean this_present_message = true && this.isSetMessage();
+    boolean that_present_message = true && that.isSetMessage();
+    if (this_present_message || that_present_message) {
+      if (!(this_present_message && that_present_message))
         return false;
-      if (!this.utilisateur.equals(that.utilisateur))
+      if (!this.message.equals(that.message))
         return false;
     }
 
@@ -304,43 +304,43 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder();
 
-    boolean present_contenu = true && (isSetContenu());
-    builder.append(present_contenu);
-    if (present_contenu)
-      builder.append(contenu);
+    boolean present_id = true && (isSetId());
+    builder.append(present_id);
+    if (present_id)
+      builder.append(id);
 
-    boolean present_utilisateur = true && (isSetUtilisateur());
-    builder.append(present_utilisateur);
-    if (present_utilisateur)
-      builder.append(utilisateur);
+    boolean present_message = true && (isSetMessage());
+    builder.append(present_message);
+    if (present_message)
+      builder.append(message);
 
     return builder.toHashCode();
   }
 
-  public int compareTo(Message other) {
+  public int compareTo(ServiceException other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    Message typedOther = (Message)other;
+    ServiceException typedOther = (ServiceException)other;
 
-    lastComparison = Boolean.valueOf(isSetContenu()).compareTo(typedOther.isSetContenu());
+    lastComparison = Boolean.valueOf(isSetId()).compareTo(typedOther.isSetId());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetContenu()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.contenu, typedOther.contenu);
+    if (isSetId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.id, typedOther.id);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetUtilisateur()).compareTo(typedOther.isSetUtilisateur());
+    lastComparison = Boolean.valueOf(isSetMessage()).compareTo(typedOther.isSetMessage());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetUtilisateur()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.utilisateur, typedOther.utilisateur);
+    if (isSetMessage()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.message, typedOther.message);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -362,22 +362,22 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("Message(");
+    StringBuilder sb = new StringBuilder("ServiceException(");
     boolean first = true;
 
-    sb.append("contenu:");
-    if (this.contenu == null) {
+    sb.append("id:");
+    if (this.id == null) {
       sb.append("null");
     } else {
-      sb.append(this.contenu);
+      sb.append(this.id);
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("utilisateur:");
-    if (this.utilisateur == null) {
+    sb.append("message:");
+    if (this.message == null) {
       sb.append("null");
     } else {
-      sb.append(this.utilisateur);
+      sb.append(this.message);
     }
     first = false;
     sb.append(")");
@@ -404,15 +404,15 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
     }
   }
 
-  private static class MessageStandardSchemeFactory implements SchemeFactory {
-    public MessageStandardScheme getScheme() {
-      return new MessageStandardScheme();
+  private static class ServiceExceptionStandardSchemeFactory implements SchemeFactory {
+    public ServiceExceptionStandardScheme getScheme() {
+      return new ServiceExceptionStandardScheme();
     }
   }
 
-  private static class MessageStandardScheme extends StandardScheme<Message> {
+  private static class ServiceExceptionStandardScheme extends StandardScheme<ServiceException> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Message struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, ServiceException struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -422,19 +422,18 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
           break;
         }
         switch (schemeField.id) {
-          case 1: // CONTENU
+          case 1: // ID
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.contenu = iprot.readString();
-              struct.setContenuIsSet(true);
+              struct.id = iprot.readString();
+              struct.setIdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // UTILISATEUR
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.utilisateur = new com.arkea.thrift.data.utilisateur.Utilisateur();
-              struct.utilisateur.read(iprot);
-              struct.setUtilisateurIsSet(true);
+          case 2: // MESSAGE
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.message = iprot.readString();
+              struct.setMessageIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -448,18 +447,18 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Message struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, ServiceException struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.contenu != null) {
-        oprot.writeFieldBegin(CONTENU_FIELD_DESC);
-        oprot.writeString(struct.contenu);
+      if (struct.id != null) {
+        oprot.writeFieldBegin(ID_FIELD_DESC);
+        oprot.writeString(struct.id);
         oprot.writeFieldEnd();
       }
-      if (struct.utilisateur != null) {
-        oprot.writeFieldBegin(UTILISATEUR_FIELD_DESC);
-        struct.utilisateur.write(oprot);
+      if (struct.message != null) {
+        oprot.writeFieldBegin(MESSAGE_FIELD_DESC);
+        oprot.writeString(struct.message);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -468,45 +467,44 @@ public class Message implements org.apache.thrift.TBase<Message, Message._Fields
 
   }
 
-  private static class MessageTupleSchemeFactory implements SchemeFactory {
-    public MessageTupleScheme getScheme() {
-      return new MessageTupleScheme();
+  private static class ServiceExceptionTupleSchemeFactory implements SchemeFactory {
+    public ServiceExceptionTupleScheme getScheme() {
+      return new ServiceExceptionTupleScheme();
     }
   }
 
-  private static class MessageTupleScheme extends TupleScheme<Message> {
+  private static class ServiceExceptionTupleScheme extends TupleScheme<ServiceException> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Message struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, ServiceException struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
-      if (struct.isSetContenu()) {
+      if (struct.isSetId()) {
         optionals.set(0);
       }
-      if (struct.isSetUtilisateur()) {
+      if (struct.isSetMessage()) {
         optionals.set(1);
       }
       oprot.writeBitSet(optionals, 2);
-      if (struct.isSetContenu()) {
-        oprot.writeString(struct.contenu);
+      if (struct.isSetId()) {
+        oprot.writeString(struct.id);
       }
-      if (struct.isSetUtilisateur()) {
-        struct.utilisateur.write(oprot);
+      if (struct.isSetMessage()) {
+        oprot.writeString(struct.message);
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Message struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, ServiceException struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
-        struct.contenu = iprot.readString();
-        struct.setContenuIsSet(true);
+        struct.id = iprot.readString();
+        struct.setIdIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.utilisateur = new com.arkea.thrift.data.utilisateur.Utilisateur();
-        struct.utilisateur.read(iprot);
-        struct.setUtilisateurIsSet(true);
+        struct.message = iprot.readString();
+        struct.setMessageIsSet(true);
       }
     }
   }

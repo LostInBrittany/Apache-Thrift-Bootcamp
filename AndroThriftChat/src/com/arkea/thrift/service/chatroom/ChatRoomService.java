@@ -38,21 +38,21 @@ public class ChatRoomService {
     /**
      * Recupérer la liste des Messages
      */
-    public List<com.arkea.thrift.data.message.Message> getListeMessage() throws org.apache.thrift.TException;
+    public List<com.arkea.thrift.data.message.Message> getListeMessage() throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException;
 
     /**
      * Envoyer un message
      * 
      * @param message
      */
-    public void envoyerMessage(com.arkea.thrift.data.message.Message message) throws org.apache.thrift.TException;
+    public void envoyerMessage(com.arkea.thrift.data.message.Message message) throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException;
 
     /**
      * Enregistrer un utilisateur
      * 
      * @param utilisateur
      */
-    public void enregistrerUtilisateur(com.arkea.thrift.data.utilisateur.Utilisateur utilisateur) throws org.apache.thrift.TException;
+    public void enregistrerUtilisateur(com.arkea.thrift.data.utilisateur.Utilisateur utilisateur) throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException;
 
   }
 
@@ -86,7 +86,7 @@ public class ChatRoomService {
       super(iprot, oprot);
     }
 
-    public List<com.arkea.thrift.data.message.Message> getListeMessage() throws org.apache.thrift.TException
+    public List<com.arkea.thrift.data.message.Message> getListeMessage() throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException
     {
       send_getListeMessage();
       return recv_getListeMessage();
@@ -98,17 +98,20 @@ public class ChatRoomService {
       sendBase("getListeMessage", args);
     }
 
-    public List<com.arkea.thrift.data.message.Message> recv_getListeMessage() throws org.apache.thrift.TException
+    public List<com.arkea.thrift.data.message.Message> recv_getListeMessage() throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException
     {
       getListeMessage_result result = new getListeMessage_result();
       receiveBase(result, "getListeMessage");
       if (result.isSetSuccess()) {
         return result.success;
       }
+      if (result.se != null) {
+        throw result.se;
+      }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getListeMessage failed: unknown result");
     }
 
-    public void envoyerMessage(com.arkea.thrift.data.message.Message message) throws org.apache.thrift.TException
+    public void envoyerMessage(com.arkea.thrift.data.message.Message message) throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException
     {
       send_envoyerMessage(message);
       recv_envoyerMessage();
@@ -121,14 +124,17 @@ public class ChatRoomService {
       sendBase("envoyerMessage", args);
     }
 
-    public void recv_envoyerMessage() throws org.apache.thrift.TException
+    public void recv_envoyerMessage() throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException
     {
       envoyerMessage_result result = new envoyerMessage_result();
       receiveBase(result, "envoyerMessage");
+      if (result.se != null) {
+        throw result.se;
+      }
       return;
     }
 
-    public void enregistrerUtilisateur(com.arkea.thrift.data.utilisateur.Utilisateur utilisateur) throws org.apache.thrift.TException
+    public void enregistrerUtilisateur(com.arkea.thrift.data.utilisateur.Utilisateur utilisateur) throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException
     {
       send_enregistrerUtilisateur(utilisateur);
       recv_enregistrerUtilisateur();
@@ -141,10 +147,13 @@ public class ChatRoomService {
       sendBase("enregistrerUtilisateur", args);
     }
 
-    public void recv_enregistrerUtilisateur() throws org.apache.thrift.TException
+    public void recv_enregistrerUtilisateur() throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException
     {
       enregistrerUtilisateur_result result = new enregistrerUtilisateur_result();
       receiveBase(result, "enregistrerUtilisateur");
+      if (result.se != null) {
+        throw result.se;
+      }
       return;
     }
 
@@ -185,7 +194,7 @@ public class ChatRoomService {
         prot.writeMessageEnd();
       }
 
-      public List<com.arkea.thrift.data.message.Message> getResult() throws org.apache.thrift.TException {
+      public List<com.arkea.thrift.data.message.Message> getResult() throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -217,7 +226,7 @@ public class ChatRoomService {
         prot.writeMessageEnd();
       }
 
-      public void getResult() throws org.apache.thrift.TException {
+      public void getResult() throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -249,7 +258,7 @@ public class ChatRoomService {
         prot.writeMessageEnd();
       }
 
-      public void getResult() throws org.apache.thrift.TException {
+      public void getResult() throws com.arkea.thrift.data.exception.ServiceException, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -289,7 +298,11 @@ public class ChatRoomService {
 
       protected getListeMessage_result getResult(I iface, getListeMessage_args args) throws org.apache.thrift.TException {
         getListeMessage_result result = new getListeMessage_result();
-        result.success = iface.getListeMessage();
+        try {
+          result.success = iface.getListeMessage();
+        } catch (com.arkea.thrift.data.exception.ServiceException se) {
+          result.se = se;
+        }
         return result;
       }
     }
@@ -305,7 +318,11 @@ public class ChatRoomService {
 
       protected envoyerMessage_result getResult(I iface, envoyerMessage_args args) throws org.apache.thrift.TException {
         envoyerMessage_result result = new envoyerMessage_result();
-        iface.envoyerMessage(args.message);
+        try {
+          iface.envoyerMessage(args.message);
+        } catch (com.arkea.thrift.data.exception.ServiceException se) {
+          result.se = se;
+        }
         return result;
       }
     }
@@ -321,7 +338,11 @@ public class ChatRoomService {
 
       protected enregistrerUtilisateur_result getResult(I iface, enregistrerUtilisateur_args args) throws org.apache.thrift.TException {
         enregistrerUtilisateur_result result = new enregistrerUtilisateur_result();
-        iface.enregistrerUtilisateur(args.utilisateur);
+        try {
+          iface.enregistrerUtilisateur(args.utilisateur);
+        } catch (com.arkea.thrift.data.exception.ServiceException se) {
+          result.se = se;
+        }
         return result;
       }
     }
@@ -577,6 +598,7 @@ public class ChatRoomService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getListeMessage_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+    private static final org.apache.thrift.protocol.TField SE_FIELD_DESC = new org.apache.thrift.protocol.TField("se", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -585,10 +607,12 @@ public class ChatRoomService {
     }
 
     private List<com.arkea.thrift.data.message.Message> success; // required
+    private com.arkea.thrift.data.exception.ServiceException se; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success");
+      SUCCESS((short)0, "success"),
+      SE((short)1, "se");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -605,6 +629,8 @@ public class ChatRoomService {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
+          case 1: // SE
+            return SE;
           default:
             return null;
         }
@@ -651,6 +677,8 @@ public class ChatRoomService {
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
               new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, com.arkea.thrift.data.message.Message.class))));
+      tmpMap.put(_Fields.SE, new org.apache.thrift.meta_data.FieldMetaData("se", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getListeMessage_result.class, metaDataMap);
     }
@@ -659,10 +687,12 @@ public class ChatRoomService {
     }
 
     public getListeMessage_result(
-      List<com.arkea.thrift.data.message.Message> success)
+      List<com.arkea.thrift.data.message.Message> success,
+      com.arkea.thrift.data.exception.ServiceException se)
     {
       this();
       this.success = success;
+      this.se = se;
     }
 
     /**
@@ -676,6 +706,9 @@ public class ChatRoomService {
         }
         this.success = __this__success;
       }
+      if (other.isSetSe()) {
+        this.se = new com.arkea.thrift.data.exception.ServiceException(other.se);
+      }
     }
 
     public getListeMessage_result deepCopy() {
@@ -685,6 +718,7 @@ public class ChatRoomService {
     @Override
     public void clear() {
       this.success = null;
+      this.se = null;
     }
 
     public int getSuccessSize() {
@@ -725,6 +759,29 @@ public class ChatRoomService {
       }
     }
 
+    public com.arkea.thrift.data.exception.ServiceException getSe() {
+      return this.se;
+    }
+
+    public void setSe(com.arkea.thrift.data.exception.ServiceException se) {
+      this.se = se;
+    }
+
+    public void unsetSe() {
+      this.se = null;
+    }
+
+    /** Returns true if field se is set (has been assigned a value) and false otherwise */
+    public boolean isSetSe() {
+      return this.se != null;
+    }
+
+    public void setSeIsSet(boolean value) {
+      if (!value) {
+        this.se = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
       case SUCCESS:
@@ -735,6 +792,14 @@ public class ChatRoomService {
         }
         break;
 
+      case SE:
+        if (value == null) {
+          unsetSe();
+        } else {
+          setSe((com.arkea.thrift.data.exception.ServiceException)value);
+        }
+        break;
+
       }
     }
 
@@ -742,6 +807,9 @@ public class ChatRoomService {
       switch (field) {
       case SUCCESS:
         return getSuccess();
+
+      case SE:
+        return getSe();
 
       }
       throw new IllegalStateException();
@@ -756,6 +824,8 @@ public class ChatRoomService {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
+      case SE:
+        return isSetSe();
       }
       throw new IllegalStateException();
     }
@@ -782,6 +852,15 @@ public class ChatRoomService {
           return false;
       }
 
+      boolean this_present_se = true && this.isSetSe();
+      boolean that_present_se = true && that.isSetSe();
+      if (this_present_se || that_present_se) {
+        if (!(this_present_se && that_present_se))
+          return false;
+        if (!this.se.equals(that.se))
+          return false;
+      }
+
       return true;
     }
 
@@ -793,6 +872,11 @@ public class ChatRoomService {
       builder.append(present_success);
       if (present_success)
         builder.append(success);
+
+      boolean present_se = true && (isSetSe());
+      builder.append(present_se);
+      if (present_se)
+        builder.append(se);
 
       return builder.toHashCode();
     }
@@ -811,6 +895,16 @@ public class ChatRoomService {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetSe()).compareTo(typedOther.isSetSe());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSe()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.se, typedOther.se);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -840,6 +934,14 @@ public class ChatRoomService {
         sb.append("null");
       } else {
         sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("se:");
+      if (this.se == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.se);
       }
       first = false;
       sb.append(")");
@@ -903,6 +1005,15 @@ public class ChatRoomService {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 1: // SE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.se = new com.arkea.thrift.data.exception.ServiceException();
+                struct.se.read(iprot);
+                struct.setSeIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -928,6 +1039,11 @@ public class ChatRoomService {
           }
           oprot.writeFieldEnd();
         }
+        if (struct.se != null) {
+          oprot.writeFieldBegin(SE_FIELD_DESC);
+          struct.se.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -949,7 +1065,10 @@ public class ChatRoomService {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSe()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
@@ -959,12 +1078,15 @@ public class ChatRoomService {
             }
           }
         }
+        if (struct.isSetSe()) {
+          struct.se.write(oprot);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, getListeMessage_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(1);
+        BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
             org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
@@ -978,6 +1100,11 @@ public class ChatRoomService {
             }
           }
           struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.se = new com.arkea.thrift.data.exception.ServiceException();
+          struct.se.read(iprot);
+          struct.setSeIsSet(true);
         }
       }
     }
@@ -1346,6 +1473,7 @@ public class ChatRoomService {
   public static class envoyerMessage_result implements org.apache.thrift.TBase<envoyerMessage_result, envoyerMessage_result._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("envoyerMessage_result");
 
+    private static final org.apache.thrift.protocol.TField SE_FIELD_DESC = new org.apache.thrift.protocol.TField("se", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -1353,10 +1481,11 @@ public class ChatRoomService {
       schemes.put(TupleScheme.class, new envoyerMessage_resultTupleSchemeFactory());
     }
 
+    private com.arkea.thrift.data.exception.ServiceException se; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
+      SE((short)1, "se");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -1371,6 +1500,8 @@ public class ChatRoomService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
+          case 1: // SE
+            return SE;
           default:
             return null;
         }
@@ -1409,9 +1540,13 @@ public class ChatRoomService {
         return _fieldName;
       }
     }
+
+    // isset id assignments
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SE, new org.apache.thrift.meta_data.FieldMetaData("se", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(envoyerMessage_result.class, metaDataMap);
     }
@@ -1419,10 +1554,20 @@ public class ChatRoomService {
     public envoyerMessage_result() {
     }
 
+    public envoyerMessage_result(
+      com.arkea.thrift.data.exception.ServiceException se)
+    {
+      this();
+      this.se = se;
+    }
+
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public envoyerMessage_result(envoyerMessage_result other) {
+      if (other.isSetSe()) {
+        this.se = new com.arkea.thrift.data.exception.ServiceException(other.se);
+      }
     }
 
     public envoyerMessage_result deepCopy() {
@@ -1431,15 +1576,50 @@ public class ChatRoomService {
 
     @Override
     public void clear() {
+      this.se = null;
+    }
+
+    public com.arkea.thrift.data.exception.ServiceException getSe() {
+      return this.se;
+    }
+
+    public void setSe(com.arkea.thrift.data.exception.ServiceException se) {
+      this.se = se;
+    }
+
+    public void unsetSe() {
+      this.se = null;
+    }
+
+    /** Returns true if field se is set (has been assigned a value) and false otherwise */
+    public boolean isSetSe() {
+      return this.se != null;
+    }
+
+    public void setSeIsSet(boolean value) {
+      if (!value) {
+        this.se = null;
+      }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
+      case SE:
+        if (value == null) {
+          unsetSe();
+        } else {
+          setSe((com.arkea.thrift.data.exception.ServiceException)value);
+        }
+        break;
+
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
+      case SE:
+        return getSe();
+
       }
       throw new IllegalStateException();
     }
@@ -1451,6 +1631,8 @@ public class ChatRoomService {
       }
 
       switch (field) {
+      case SE:
+        return isSetSe();
       }
       throw new IllegalStateException();
     }
@@ -1468,12 +1650,26 @@ public class ChatRoomService {
       if (that == null)
         return false;
 
+      boolean this_present_se = true && this.isSetSe();
+      boolean that_present_se = true && that.isSetSe();
+      if (this_present_se || that_present_se) {
+        if (!(this_present_se && that_present_se))
+          return false;
+        if (!this.se.equals(that.se))
+          return false;
+      }
+
       return true;
     }
 
     @Override
     public int hashCode() {
       HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_se = true && (isSetSe());
+      builder.append(present_se);
+      if (present_se)
+        builder.append(se);
 
       return builder.toHashCode();
     }
@@ -1486,6 +1682,16 @@ public class ChatRoomService {
       int lastComparison = 0;
       envoyerMessage_result typedOther = (envoyerMessage_result)other;
 
+      lastComparison = Boolean.valueOf(isSetSe()).compareTo(typedOther.isSetSe());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSe()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.se, typedOther.se);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       return 0;
     }
 
@@ -1506,6 +1712,13 @@ public class ChatRoomService {
       StringBuilder sb = new StringBuilder("envoyerMessage_result(");
       boolean first = true;
 
+      sb.append("se:");
+      if (this.se == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.se);
+      }
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -1548,6 +1761,15 @@ public class ChatRoomService {
             break;
           }
           switch (schemeField.id) {
+            case 1: // SE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.se = new com.arkea.thrift.data.exception.ServiceException();
+                struct.se.read(iprot);
+                struct.setSeIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -1561,6 +1783,11 @@ public class ChatRoomService {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.se != null) {
+          oprot.writeFieldBegin(SE_FIELD_DESC);
+          struct.se.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -1578,11 +1805,25 @@ public class ChatRoomService {
       @Override
       public void write(org.apache.thrift.protocol.TProtocol prot, envoyerMessage_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSe()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSe()) {
+          struct.se.write(oprot);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, envoyerMessage_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.se = new com.arkea.thrift.data.exception.ServiceException();
+          struct.se.read(iprot);
+          struct.setSeIsSet(true);
+        }
       }
     }
 
@@ -1950,6 +2191,7 @@ public class ChatRoomService {
   public static class enregistrerUtilisateur_result implements org.apache.thrift.TBase<enregistrerUtilisateur_result, enregistrerUtilisateur_result._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("enregistrerUtilisateur_result");
 
+    private static final org.apache.thrift.protocol.TField SE_FIELD_DESC = new org.apache.thrift.protocol.TField("se", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -1957,10 +2199,11 @@ public class ChatRoomService {
       schemes.put(TupleScheme.class, new enregistrerUtilisateur_resultTupleSchemeFactory());
     }
 
+    private com.arkea.thrift.data.exception.ServiceException se; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
+      SE((short)1, "se");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -1975,6 +2218,8 @@ public class ChatRoomService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
+          case 1: // SE
+            return SE;
           default:
             return null;
         }
@@ -2013,9 +2258,13 @@ public class ChatRoomService {
         return _fieldName;
       }
     }
+
+    // isset id assignments
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SE, new org.apache.thrift.meta_data.FieldMetaData("se", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(enregistrerUtilisateur_result.class, metaDataMap);
     }
@@ -2023,10 +2272,20 @@ public class ChatRoomService {
     public enregistrerUtilisateur_result() {
     }
 
+    public enregistrerUtilisateur_result(
+      com.arkea.thrift.data.exception.ServiceException se)
+    {
+      this();
+      this.se = se;
+    }
+
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public enregistrerUtilisateur_result(enregistrerUtilisateur_result other) {
+      if (other.isSetSe()) {
+        this.se = new com.arkea.thrift.data.exception.ServiceException(other.se);
+      }
     }
 
     public enregistrerUtilisateur_result deepCopy() {
@@ -2035,15 +2294,50 @@ public class ChatRoomService {
 
     @Override
     public void clear() {
+      this.se = null;
+    }
+
+    public com.arkea.thrift.data.exception.ServiceException getSe() {
+      return this.se;
+    }
+
+    public void setSe(com.arkea.thrift.data.exception.ServiceException se) {
+      this.se = se;
+    }
+
+    public void unsetSe() {
+      this.se = null;
+    }
+
+    /** Returns true if field se is set (has been assigned a value) and false otherwise */
+    public boolean isSetSe() {
+      return this.se != null;
+    }
+
+    public void setSeIsSet(boolean value) {
+      if (!value) {
+        this.se = null;
+      }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
+      case SE:
+        if (value == null) {
+          unsetSe();
+        } else {
+          setSe((com.arkea.thrift.data.exception.ServiceException)value);
+        }
+        break;
+
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
+      case SE:
+        return getSe();
+
       }
       throw new IllegalStateException();
     }
@@ -2055,6 +2349,8 @@ public class ChatRoomService {
       }
 
       switch (field) {
+      case SE:
+        return isSetSe();
       }
       throw new IllegalStateException();
     }
@@ -2072,12 +2368,26 @@ public class ChatRoomService {
       if (that == null)
         return false;
 
+      boolean this_present_se = true && this.isSetSe();
+      boolean that_present_se = true && that.isSetSe();
+      if (this_present_se || that_present_se) {
+        if (!(this_present_se && that_present_se))
+          return false;
+        if (!this.se.equals(that.se))
+          return false;
+      }
+
       return true;
     }
 
     @Override
     public int hashCode() {
       HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_se = true && (isSetSe());
+      builder.append(present_se);
+      if (present_se)
+        builder.append(se);
 
       return builder.toHashCode();
     }
@@ -2090,6 +2400,16 @@ public class ChatRoomService {
       int lastComparison = 0;
       enregistrerUtilisateur_result typedOther = (enregistrerUtilisateur_result)other;
 
+      lastComparison = Boolean.valueOf(isSetSe()).compareTo(typedOther.isSetSe());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSe()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.se, typedOther.se);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       return 0;
     }
 
@@ -2110,6 +2430,13 @@ public class ChatRoomService {
       StringBuilder sb = new StringBuilder("enregistrerUtilisateur_result(");
       boolean first = true;
 
+      sb.append("se:");
+      if (this.se == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.se);
+      }
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -2152,6 +2479,15 @@ public class ChatRoomService {
             break;
           }
           switch (schemeField.id) {
+            case 1: // SE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.se = new com.arkea.thrift.data.exception.ServiceException();
+                struct.se.read(iprot);
+                struct.setSeIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -2165,6 +2501,11 @@ public class ChatRoomService {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.se != null) {
+          oprot.writeFieldBegin(SE_FIELD_DESC);
+          struct.se.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -2182,11 +2523,25 @@ public class ChatRoomService {
       @Override
       public void write(org.apache.thrift.protocol.TProtocol prot, enregistrerUtilisateur_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSe()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSe()) {
+          struct.se.write(oprot);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, enregistrerUtilisateur_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.se = new com.arkea.thrift.data.exception.ServiceException();
+          struct.se.read(iprot);
+          struct.setSeIsSet(true);
+        }
       }
     }
 
