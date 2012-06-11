@@ -24,6 +24,7 @@ public class ChatRoomProcessor implements ChatRoomService.Iface {
 	@Override
 	public void envoyerMessage(Message message) throws ServiceException {
 		addMessage(message);
+		System.out.println("Message de "+ message.getUtilisateur().getPseudo() +" : " +message.getContenu());
 	}
 
 	@Override

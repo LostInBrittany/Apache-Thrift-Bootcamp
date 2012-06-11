@@ -9,6 +9,7 @@ import org.apache.thrift.transport.TTransportException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -22,7 +23,7 @@ import com.arkea.client.android.R;
 import com.arkea.thrift.data.utilisateur.Utilisateur;
 import com.arkea.thrift.service.chatroom.ChatRoomService;
 
-public class AndroThriftChatActivity extends Activity {
+public class LoginActivity extends Activity {
     
 	 
 	
@@ -78,14 +79,21 @@ public class AndroThriftChatActivity extends Activity {
 				
 			} catch (TTransportException e) {
 				Log.e("User signing-in", "Thrift exception", e);
+				return null;
 			} catch (TException e) {
 				Log.e("User signing-in", "Thrift exception", e);
+				return null;
 			} catch (Exception e) {
 				Log.e("User signing-in", "Thrift exception", e);
+				return null;
 			}
-	    	finally {
-	    		return null;
-	    	}
+	    	
+	    	Intent intent = new Intent(LoginActivity.this, ChatWindowActivity.class);
+	    	intent.putExtra("user", user);
+	    	startActivity(intent);
+	    	return null;
+
+	    	
 	    	
 	    }
 
